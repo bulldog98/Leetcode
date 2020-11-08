@@ -5,7 +5,7 @@ class Solution {
         require(num in 1..3999) { "number has to be between 1 and 3999 including these" }
         var tmp = num
         val sb = StringBuilder()
-        values.forEachIndexed { index, key ->
+        for ((index, key) in values.withIndex()) {
             while (tmp >= key) {
                 sb.append(romanNumber[index])
                 tmp -= key
@@ -16,7 +16,7 @@ class Solution {
     }
 
     companion object {
-        private val values = arrayOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+        private val values = shortArrayOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
         private val romanNumber = arrayOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     }
 }
