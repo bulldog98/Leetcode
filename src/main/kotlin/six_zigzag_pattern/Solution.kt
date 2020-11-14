@@ -1,22 +1,26 @@
 package de.bulldog98.leetcode.six_zigzag_pattern
 
+import kotlin.math.min
+
 class Solution {
     fun convert(s: String, numRows: Int): String {
         if (numRows == 1) return s
-        val resultSet = (1..numRows).map {
-            mutableListOf<Char>()
+        val rows = (0 until (min(s.length, numRows))).map {
+            StringBuilder()
         }
-        val dividend = numRows*2 - 2
-        s.forEachIndexed { index, c ->
-            (0 until numRows).forEach { row ->
-                if (index % dividend == row || index % dividend == dividend - row) {
-                    resultSet[row].add(c)
-                }
+        var currentRow = 0
+        var goingDown = false
+        s.forEach {
+            rows[currentRow].append(it)
+            if (currentRow == 0 || currentRow == numRows - 1) {
+                goingDown = !goingDown
             }
+            currentRow += if (goingDown) 1 else -1
         }
-        return resultSet.map {
-            if (it.isEmpty()) "" else
-            it.map { "$it" }.reduce { a, b -> a + b}
-        }.reduce { a, b -> a + b }
+        val ret = StringBuilder()
+        rows.forEach {
+            ret.append(it)
+        }
+        return ret.toString()
     }
 }
